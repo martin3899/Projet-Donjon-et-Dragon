@@ -25,9 +25,9 @@ public class Menu {
             System.out.println("Le personnage est de type " + characterType);
             System.out.println("Le personnage s'appelle " + characterName);
 
-            Personage Warrior = new Personage(characterName,characterType);   //Création du nouveau personnage
-            Warrior.displayFeatures(characterType);
-            System.out.println(Warrior);
+//            Personnage.Personage Warrior = new Personnage.Personage(characterName,characterType);   //Création du nouveau personnage
+//            Warrior.displayFeatures(characterType);
+//            System.out.println(Warrior);
 
             Scanner confirmation = new Scanner(System.in);
             String confirmationPersonnage;

@@ -1,4 +1,6 @@
-public class EquipementOffensif {
+package Equipements;
+
+public abstract class EquipementOffensif {
 
     //Mise en place des attibuts
     private String typeWeapon;

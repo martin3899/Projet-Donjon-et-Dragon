@@ -1,4 +1,6 @@
-public class EquipementDefensif {
+package Equipements;
+
+public abstract class EquipementDefensif {
 
     //Mise en place des attibuts
     private String protectionEquipement;
