@@ -1,26 +1,31 @@
 public class EquipementOffensif {
-    public String typeWeapon;
-    public String nameWeapon;
-    public int lvlAtk;
 
-//    public EquipementOffensif(String weapon, String name, int atk){
-//        typeWeapon=weapon;
-//        nameWeapon=name;
-//        lvlAtk=atk;
-//    }
+    //Mise en place des attibuts
+    private String typeWeapon;
+    private String nameWeapon;
+    private int lvlAtk;
 
-    public String getTypeWeapon() {
-        return this.typeWeapon;
+    //Création du constructeur
+    public EquipementOffensif(String weapon, String name, int atk){
+        typeWeapon=weapon;
+        nameWeapon=name;
+        lvlAtk=atk;
     }
 
-    public String getNameWeapon() {
-        return this.nameWeapon;
+    //Mise en place des setters
+    public void setTypeWeapon(String typeWeapon) {
+        this.typeWeapon = typeWeapon;
     }
 
-    public int getLvlAtk(){
-        return  this.lvlAtk;
+    public void setNameWeapon(String nameWeapon) {
+        this.nameWeapon = nameWeapon;
     }
 
+    public void setLvlAtk(int lvlAtk) {
+        this.lvlAtk = lvlAtk;
+    }
+
+    //Méthode permettant d'afficher les caractéristiques de l'équipement offensif sous forme de chaine de caractère
     public String toString(){
         return "Son équipement offensif: " + typeWeapon + " de nom " + nameWeapon + " et de niveau d'attaque " + lvlAtk + ".";
     }

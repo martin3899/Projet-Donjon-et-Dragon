@@ -1,13 +1,16 @@
 import java.util.Scanner;
 public class Personage {
-    public String nameCharacter;
-    public String typeCharacter;
-    public int healthPoint;
-    public int offensiveStrength;
+    //Mise en place des attributs
+    private String nameCharacter;
+    private String typeCharacter;
+    private int healthPoint;
+    private int offensiveStrength;
 
-    public EquipementOffensif equipementOffensif;
-    public EquipementDefensif equipementDefensif;
+    private EquipementOffensif equipementOffensif;
+    private EquipementDefensif equipementDefensif;
 
+
+    //Création des 3 constructeurs
     public Personage(){
     }
 
@@ -20,61 +23,57 @@ public class Personage {
         typeCharacter=type;
     }
 
+    //Mise en place des setters
+    public void setNameCharacter(String nameCharacter) {
+        this.nameCharacter = nameCharacter;
+    }
+
+    public void setTypeCharacter(String typeCharacter) {
+        this.typeCharacter = typeCharacter;
+    }
+
+    public void setHealthPoint(int healthPoint) {
+        this.healthPoint = healthPoint;
+    }
+
+    public void setOffensiveStrength(int offensiveStrength) {
+        this.offensiveStrength = offensiveStrength;
+    }
+
+    public void setEquipementOffensif(EquipementOffensif equipementOffensif) {
+        this.equipementOffensif = equipementOffensif;
+    }
+
+    public void setEquipementDefensif(EquipementDefensif equipementDefensif) {
+        this.equipementDefensif = equipementDefensif;
+    }
+
+    //Afficher les caractéristiques du personnage
     public void displayFeatures(String type){
         if (type.equals("Guerrier")){
             int setHealthPoint=10;
             int setOffensiveStrength=10;
             healthPoint=setHealthPoint;
             offensiveStrength=setOffensiveStrength;
-            EquipementOffensif Arme = new EquipementOffensif();
-            EquipementDefensif Bouclier = new EquipementDefensif();
-            Arme.typeWeapon="Arme";
-            Arme.nameWeapon="Excalibur";
-            Arme.lvlAtk=100;
-            Bouclier.protectionEquipement="Bouclier";
-            Bouclier.nameEquipement="Impasse du soleil";
-            Bouclier.lvlDef=100;
-
-        }
-        else {
+            EquipementOffensif arme = new EquipementOffensif("Arme","Excalibur",100); //Création de l'objet "arme"
+            EquipementDefensif bouclier = new EquipementDefensif("Bouclier","Impasse du soleil",100); //Création de l'objet "bouclier"
+            equipementOffensif= arme; //On associe l'arme au guerrier
+            equipementDefensif=bouclier; //On associe le bouclier au guerrier
+        } else {
             int setHealthPoint=6;
             int setOffensiveStrength=15;
             healthPoint=setHealthPoint;
             offensiveStrength=setOffensiveStrength;
-            EquipementOffensif Sort = new EquipementOffensif();
-            EquipementDefensif Philter = new EquipementDefensif();
-            Sort.typeWeapon="Spell";
-            String typeWeapon = Sort.getTypeWeapon();
-            Sort.nameWeapon="Calcination";
-            Sort.lvlAtk=150;
-            Philter.protectionEquipement="Philter";
-            Philter.nameEquipement="Régénération suprême";
-            Philter.lvlDef=80;
+            EquipementOffensif sort = new EquipementOffensif("Spell","Calcination", 150);  //Création de l'objet "sort"
+            EquipementDefensif filtre = new EquipementDefensif("Philter","Régénération suprême",80);  //Création de l'objet "filtre"
+            equipementOffensif=sort;  //On associe le sort au magicien
+            equipementDefensif=filtre;  //On associe le filtre au magicien
         }
     }
 
+    //Méthode permettant d'afficher les caractéristiques du personnage sous forme de chaine de caractère
     public String toString() {
-        return "Le " + typeCharacter + " s'appelle " + nameCharacter + ", il a " + healthPoint + " points de vie et a " + offensiveStrength + " de force d'attaque." + equipementOffensif + equipementDefensif;
-
-    }
-    public static void main(String[] args){
-        Scanner getType = new Scanner(System.in);
-        String characterType;
-        System.out.println("Entrer le type");
-        characterType= getType.nextLine();
-
-        Scanner getName = new Scanner(System.in);
-        String characterName;
-        System.out.println("Entrer le nom");
-        characterName= getName.nextLine();
-
-        System.out.println("Le personnage est de type " + characterType);
-        System.out.println("Le personnage s'appelle " + characterName);
-
-        Personage Warrior = new Personage(characterName,characterType);
-        Warrior.displayFeatures(characterType);
-        System.out.println(Warrior);
-
+        return "Le " + typeCharacter + " s'appelle " + nameCharacter + ", il a " + healthPoint + " points de vie et a " + offensiveStrength + " de force d'attaque. " + equipementOffensif + " " + equipementDefensif;
 
     }
 }
