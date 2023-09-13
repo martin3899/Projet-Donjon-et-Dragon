@@ -1,40 +1,44 @@
+import Exceptions.PersonnageHorsPlateauException;
+import TypePersonnage.Guerrier;
+import TypePersonnage.Magicien;
+
 import java.util.Scanner;
 
 public class Menu {
 
-    public void launchGame(){  //Lancement du jeu
+    private String characterType;
+    public void launchGame() {  //Lancement du jeu
         System.out.println("Vous jouez à Donjons & Dragons");
     }
-    public void startGame(){  //Début du jeu
-        Scanner start = new Scanner(System.in);
-        String startGame;
-        System.out.println("Voulez-vous modifier le personnage?");     //Propose une modification de personnage
-        startGame = start.nextLine();
 
-        if (startGame.equals("oui")){
-            Scanner getType = new Scanner(System.in);
-            String characterType;
-            System.out.println("Entrer le type");                //Propose le type
-            characterType = getType.nextLine();
+    public void startGame() throws PersonnageHorsPlateauException {  //Début du jeu
+        String askModificationCharacter = scanner("Voulez-vous modifier le personnage?");
+        if (transformToBoolean(askModificationCharacter)) {
 
-            Scanner getName = new Scanner(System.in);
-            String characterName;
-            System.out.println("Entrer le nom");                  //Propose le nom
-            characterName = getName.nextLine();
+            String characterType = scanner("Entrer le type").toLowerCase();
 
-            System.out.println("Le personnage est de type " + characterType);
-            System.out.println("Le personnage s'appelle " + characterName);
+            while (characterType != "guerrier" || characterType != "magicien"){
+                if (characterType.equals("guerrier")) {
+                    String characterName = scanner("Entrer le nom");
+                    createWarrior(characterName, characterType);
+                    break;
+                } else if (characterType.equals("magicien")) {
+                    String characterName = scanner("Entrer le nom");
+                    createMage(characterName, characterType);
+                    break;
+                } else {
+                    characterType=scanner("Entrer le type").toLowerCase();
+                }
+            }
 
-//            Personnage.Personage Warrior = new Personnage.Personage(characterName,characterType);   //Création du nouveau personnage
-//            Warrior.displayFeatures(characterType);
-//            System.out.println(Warrior);
 
-            Scanner confirmation = new Scanner(System.in);
-            String confirmationPersonnage;
-            System.out.println("Ce personnage vous convient?");      //Confirmation du personnage créé
-            confirmationPersonnage = confirmation.nextLine();
+            //System.out.println("Le personnage est de type " + characterType);
+            //System.out.println("Le personnage s'appelle " + characterName);
 
-            if (confirmationPersonnage.equals("non")){
+
+            String asksIfItsSuit = scanner("Ce personnage vous convient?");
+
+            if (asksIfItsSuit.equals("non")) {
                 startGame();    // On recommence si c'est non
             } else {
                 gameplay();     // On joue si c'est oui
@@ -45,32 +49,64 @@ public class Menu {
         }
     }
 
-    public void gameplay(){ //Partie de jeu
-        int position =1;
+    public void gameplay() throws PersonnageHorsPlateauException { //Partie de jeu
+        System.out.println("Lancement de la partie");
+        int position = 1;
         System.out.println("Le personnage est sur la case " + position);
-        while (position<64){
-            int valueDe= (int)(Math.random()*6)+1;   //Lancement du dé
+        while (position < 64) {
+            int valueDe = (int) (Math.random() * 6) + 1;   //Lancement du dé
             position += valueDe;   //Mise  à jour de la position
-            System.out.println("Le personnage est sur la case " + position);
-            if (position>=64){
-                System.out.println("Bravo, vous avez gagné!");
+
+            if (position > 64) {
+                try{
+                    throw new PersonnageHorsPlateauException(valueDe);
+                } catch(PersonnageHorsPlateauException e) {
+                    System.out.println("Vous revenez à la position initiale!");
+                    position -= valueDe;
+                }
             }
+
+            System.out.println("Le personnage est sur la case " + position);
         }
+        System.out.println("Bravo, vous avez gagné!");
         endGame();
     }
-    public void endGame(){  //Fin de jeu
+
+    public void endGame() throws PersonnageHorsPlateauException {  //Fin de jeu
+
         System.out.println("Fin de la partie");
+        String restartGame = scanner("Voulez-vous recommencer?");
 
-        Scanner restart = new Scanner(System.in);
-        String restartGame;
-        System.out.println("Voulez-vous recommencer?");          //Proposition pour recommencer la parie
-        restartGame= restart.nextLine();
-
-        if (restartGame.equals("oui")){
+        if (restartGame.equals("oui")) {
             startGame();      //Si oui on recommence
             gameplay();
         } else {
             System.out.println("Vous quittez le jeu!"); // Si non on quitte le jeu
         }
+    }
+
+    public String scanner(String question) {
+        Scanner scn = new Scanner(System.in);
+        String answer;
+        System.out.println(question);          //Proposition pour recommencer la parie
+        answer = scn.nextLine();
+        return answer;
+    }
+
+    public void createWarrior(String name, String type) {
+        Guerrier warrior = new Guerrier(name);
+        warrior.displayFeatures(type);
+        System.out.println(warrior.toString(type));
+    }
+
+    public void createMage(String name, String type) {
+        Magicien mage = new Magicien(name);
+        mage.displayFeatures(type);
+        System.out.println(mage.toString(type));
+    }
+
+    public boolean transformToBoolean(String word){
+        word.equals("oui");
+        return true;
     }
 }

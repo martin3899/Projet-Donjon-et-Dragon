@@ -6,6 +6,9 @@ import EquipementDefensif.Bouclier;
 import EquipementDefensif.Philtre;
 import EquipementOffensif.Arme;
 import EquipementOffensif.Sort;
+import TypePersonnage.Guerrier;
+import TypePersonnage.Magicien;
+
 public abstract class Personage {
     //Mise en place des attributs
     private String nameCharacter;
@@ -15,7 +18,8 @@ public abstract class Personage {
 
 //    private EquipementOffensif equipementOffensif;
 //    private EquipementDefensif equipementDefensif;
-
+    private Guerrier guerrier;
+    private Magicien magicien;
     private Bouclier shield;
     private Arme weapon;
 
@@ -36,34 +40,9 @@ public abstract class Personage {
         typeCharacter=type;
     }
 
-    //Mise en place des setters
-    public void setNameCharacter(String nameCharacter) {
-        this.nameCharacter = nameCharacter;
-    }
-
-    public void setTypeCharacter(String typeCharacter) {
-        this.typeCharacter = typeCharacter;
-    }
-
-    public void setHealthPoint(int healthPoint) {
-        this.healthPoint = healthPoint;
-    }
-
-    public void setOffensiveStrength(int offensiveStrength) {
-        this.offensiveStrength = offensiveStrength;
-    }
-
-//    public void setEquipementOffensif(EquipementOffensif equipementOffensif) {
-//        this.equipementOffensif = equipementOffensif;
-//    }
-//
-//    public void setEquipementDefensif(EquipementDefensif equipementDefensif) {
-//        this.equipementDefensif = equipementDefensif;
-//    }
-
     //Afficher les caractéristiques du personnage
     public void displayFeatures(String type){
-        if (type.equals("Guerrier")){
+        if (type.equals("guerrier")){
             int setHealthPoint=10;
             int setOffensiveStrength=10;
             healthPoint=setHealthPoint;
@@ -85,8 +64,12 @@ public abstract class Personage {
     }
 
     //Méthode permettant d'afficher les caractéristiques du personnage sous forme de chaine de caractère
-    public String toString() {
-        return "Le " + typeCharacter + " s'appelle " + nameCharacter + ", il a " + healthPoint + " points de vie et a " + offensiveStrength + " de force d'attaque. " + equipementOffensif + " " + equipementDefensif;
+    public String toString(String type) {
+        if (type.equals("guerrier")) {
+            return "Le "+ type + " s'appelle " + nameCharacter + ", il a " + healthPoint + " points de vie et a " + offensiveStrength + " de force d'attaque. " + weapon + " " + shield;
+        } else {
+            return "Le "+ type +" s'appelle " + nameCharacter + ", il a " + healthPoint + " points de vie et a " + offensiveStrength + " de force d'attaque. " + spell + " " + philter;
+        }
 
     }
 }
