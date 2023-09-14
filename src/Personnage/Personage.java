@@ -11,21 +11,13 @@ import TypePersonnage.Magicien;
 
 public abstract class Personage {
     //Mise en place des attributs
-    private String nameCharacter;
+    protected String nameCharacter;
     private String typeCharacter;
-    private int healthPoint;
-    private int offensiveStrength;
+    protected int healthPoint;
+    protected int offensiveStrength;
 
-//    private EquipementOffensif equipementOffensif;
-//    private EquipementDefensif equipementDefensif;
-    private Guerrier guerrier;
-    private Magicien magicien;
-    private Bouclier shield;
-    private Arme weapon;
-
-    private Sort spell;
-    private Philtre philter;
-
+    private EquipementOffensif equipementOffensif;
+    private EquipementDefensif equipementDefensif;
 
     //Création des 3 constructeurs
     public Personage(){
@@ -40,17 +32,21 @@ public abstract class Personage {
         typeCharacter=type;
     }
 
+    public void setTypeCharacter(String typeCharacter) {
+        this.typeCharacter = typeCharacter;
+    }
+
     //Afficher les caractéristiques du personnage
-    public void displayFeatures(String type){
-        if (type.equals("guerrier")){
+    public void displayFeatures(){
+        if (typeCharacter.equals("guerrier")){
             int setHealthPoint=10;
             int setOffensiveStrength=10;
             healthPoint=setHealthPoint;
             offensiveStrength=setOffensiveStrength;
             Arme arme = new Arme("Arme","Excalibur",100); //Création de l'objet "arme"
             Bouclier bouclier = new Bouclier("Bouclier","Impasse du soleil",100); //Création de l'objet "bouclier"
-            weapon= arme; //On associe l'arme au guerrier
-            shield=bouclier; //On associe le bouclier au guerrier
+            equipementOffensif=arme; //On associe l'arme au guerrier
+            equipementDefensif=bouclier; //On associe le bouclier au guerrier
         } else {
             int setHealthPoint=6;
             int setOffensiveStrength=15;
@@ -58,19 +54,14 @@ public abstract class Personage {
             offensiveStrength=setOffensiveStrength;
             Sort sort = new Sort("Spell","Calcination", 150);  //Création de l'objet "sort"
             Philtre filtre = new Philtre("Philter","Régénération suprême",80);  //Création de l'objet "filtre"
-            spell=sort;  //On associe le sort au magicien
-            philter=filtre;  //On associe le filtre au magicien
+            equipementOffensif=sort;  //On associe le sort au magicien
+            equipementDefensif=filtre;  //On associe le filtre au magicien
        }
     }
 
     //Méthode permettant d'afficher les caractéristiques du personnage sous forme de chaine de caractère
-    public String toString(String type) {
-        if (type.equals("guerrier")) {
-            return "Le "+ type + " s'appelle " + nameCharacter + ", il a " + healthPoint + " points de vie et a " + offensiveStrength + " de force d'attaque. " + weapon + " " + shield;
-        } else {
-            return "Le "+ type +" s'appelle " + nameCharacter + ", il a " + healthPoint + " points de vie et a " + offensiveStrength + " de force d'attaque. " + spell + " " + philter;
-        }
-
+    public String toString() {
+        return "Le " + typeCharacter + " s'appelle " + nameCharacter + ", il a " + healthPoint + " points de vie et a " + offensiveStrength + " de force d'attaque. " + equipementOffensif + " " + equipementDefensif;
     }
 }
 
