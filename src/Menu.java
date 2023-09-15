@@ -14,7 +14,7 @@ public class Menu {
 
     public void startGame() {  //Début du jeu
 
-        String askModificationCharacter = transformToString(scannerBoolean("Voulez-vous modifier le personnage?"));
+        String askModificationCharacter = scannerBoolean("Voulez-vous modifier le personnage?").toLowerCase();
 
         if (askModificationCharacter.equals("oui")) {
 
@@ -40,7 +40,7 @@ public class Menu {
             //System.out.println("Le personnage s'appelle " + characterName);
 
 
-            String asksIfItsSuit = transformToString(scannerBoolean("Ce personnage vous convient?"));
+            String asksIfItsSuit = scannerBoolean("Ce personnage vous convient?").toLowerCase();
 
             if (asksIfItsSuit.equals("non")) {
                 startGame();    // On recommence si c'est non
@@ -69,7 +69,7 @@ public class Menu {
     public void endGame() {  //Fin de jeu
 
         System.out.println("Fin de la partie");
-        String restartGame = transformToString(scannerBoolean("Voulez-vous recommencer?"));
+        String restartGame = scannerBoolean("Voulez-vous recommencer?").toLowerCase();
 
         if (restartGame.equals("oui")) {
             startGame();      //Si oui on recommence
@@ -86,11 +86,20 @@ public class Menu {
         answer = scn.nextLine();
         return answer;
     }
-    public boolean scannerBoolean(String question) {
+    public String scannerBoolean(String question) {
         Scanner scn = new Scanner(System.in);
-        boolean answer;
+        String answer;
         System.out.println(question);          //Proposition pour recommencer la parie
-        answer = scn.nextBoolean();
+        while(true){
+            answer = scn.nextLine();
+            if(answer.equalsIgnoreCase("oui")){
+                break;
+            }else if(answer.equalsIgnoreCase("non")){
+                break;
+            }else{
+                System.out.println("Entrez oui ou non");// Tell them to enter yes or no since they entered something else.
+            }
+        }
         return answer;
     }
 
@@ -108,12 +117,5 @@ public class Menu {
         System.out.println(mage.toString());
     }
 
-    public String transformToString(boolean word) {
-        if (word==true){
-            return "oui";
-        }
-        else {
-            return "non";
-        }
-    }
+
 }

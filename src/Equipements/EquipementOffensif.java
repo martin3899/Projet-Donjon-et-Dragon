@@ -1,6 +1,9 @@
 package Equipements;
 
-public abstract class EquipementOffensif {
+import CaseTypes.Case;
+import Personnage.Personage;
+
+public abstract class EquipementOffensif implements Case {
 
     //Mise en place des attibuts
     private String typeWeapon;
@@ -15,16 +18,23 @@ public abstract class EquipementOffensif {
     }
 
     //Mise en place des setters
-    public void setTypeWeapon(String typeWeapon) {
-        this.typeWeapon = typeWeapon;
+
+
+    public String getTypeWeapon() {
+        return typeWeapon;
     }
 
-    public void setNameWeapon(String nameWeapon) {
-        this.nameWeapon = nameWeapon;
+    public String getNameWeapon() {
+        return nameWeapon;
     }
 
-    public void setLvlAtk(int lvlAtk) {
-        this.lvlAtk = lvlAtk;
+    public int getLvlAtk() {
+        return lvlAtk;
+    }
+
+    @Override
+    public void interact(Personage character) {
+        System.out.println("Incroyable un nouvel equipement offensif! Merci pour le coup de pouce!");
     }
 
     //Méthode permettant d'afficher les caractéristiques de l'équipement offensif sous forme de chaine de caractère

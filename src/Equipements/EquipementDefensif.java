@@ -15,17 +15,11 @@ public abstract class EquipementDefensif {
     }
 
     //Mise en place des setters
-    public void setProtectionEquipement(String protectionEquipement) {
-        this.protectionEquipement = protectionEquipement;
+
+    public int getLvlDef() {
+        return lvlDef;
     }
 
-    public void setNameEquipement(String nameEquipement) {
-        this.nameEquipement = nameEquipement;
-    }
-
-    public void setLvlDef(int lvlDef) {
-        this.lvlDef = lvlDef;
-    }
 
     //Méthode permettant d'afficher les caractéristiques de l'équipement défensif sous forme de chaine de caractère
 

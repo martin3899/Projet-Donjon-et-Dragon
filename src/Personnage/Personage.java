@@ -6,9 +6,8 @@ import EquipementDefensif.Bouclier;
 import EquipementDefensif.Philtre;
 import EquipementOffensif.Arme;
 import EquipementOffensif.Sort;
-import TypePersonnage.Guerrier;
-import TypePersonnage.Magicien;
-
+import  CaseTypes.Potion;
+import  CaseTypes.Ennemi;
 public abstract class Personage {
     //Mise en place des attributs
     protected String nameCharacter;
@@ -36,6 +35,7 @@ public abstract class Personage {
         this.typeCharacter = typeCharacter;
     }
 
+
     //Afficher les caractéristiques du personnage
     public void displayFeatures(){
         if (typeCharacter.equals("guerrier")){
@@ -57,6 +57,22 @@ public abstract class Personage {
             equipementOffensif=sort;  //On associe le sort au magicien
             equipementDefensif=filtre;  //On associe le filtre au magicien
        }
+    }
+
+    public void receivePotion(Potion potion){
+        int hp = potion.getHealthValue();
+        healthPoint+=hp;
+    }
+
+    public void faceEnnemy(Ennemi ennemi){
+        int atkDmg = ennemi.getAtkDamage();
+        healthPoint-=(atkDmg-equipementDefensif.getLvlDef());
+    }
+
+    public void exchangeWeapon(EquipementOffensif equipementOffensif){
+        equipementOffensif.getTypeWeapon();
+        equipementOffensif.getNameWeapon();
+        equipementOffensif.getLvlAtk();
     }
 
     //Méthode permettant d'afficher les caractéristiques du personnage sous forme de chaine de caractère
