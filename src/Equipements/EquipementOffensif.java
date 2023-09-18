@@ -32,6 +32,18 @@ public abstract class EquipementOffensif implements Case {
         return lvlAtk;
     }
 
+    public void setTypeWeapon(String typeWeapon) {
+        this.typeWeapon = typeWeapon;
+    }
+
+    public void setNameWeapon(String nameWeapon) {
+        this.nameWeapon = nameWeapon;
+    }
+
+    public void setLvlAtk(int lvlAtk) {
+        this.lvlAtk = lvlAtk;
+    }
+
     @Override
     public void interact(Personage character) {
         System.out.println("Incroyable un nouvel equipement offensif! Merci pour le coup de pouce!");

@@ -1,4 +1,6 @@
 import Exceptions.PersonnageHorsPlateauException;
+import Personnage.Personage;
+import TypePersonnage.Guerrier;
 
 import java.util.Scanner;
 
@@ -8,6 +10,9 @@ public class Main {
 //        menu.launchGame();  //lancement du jeu
 //        menu.startGame();  //début du jeu
         Game game = new Game();
-        game.versionSimplifiéePlateau();
+        Guerrier warrior = new Guerrier("Harry");
+        System.out.println(warrior);
+        game.jouerUnTour(warrior);
+        //game.setPlateauDeJeu();
     }
 }

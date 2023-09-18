@@ -7,6 +7,7 @@ import Exceptions.PersonnageHorsPlateauException;
 import Personnage.Personage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
 
@@ -37,36 +38,61 @@ public class Game {
         return 1;
     }
 
-    public void jouerUnTour(Personage personage, Case cases){
-        lancerDe();
-        positionJoueur+=lancerDe();
-        if (cases.equals(Ennemi)){
-            personage.faceEnnemy();
-            personage.displayFeatures();
-            System.out.println("Prêt à continuer?");
-        } else if (cases.equals(Potion)) {
-            personage.receivePotion();
-            personage.displayFeatures();
-            System.out.println("Prêt à continuer?");
-        } else if (cases.equals(Arme)) {
-            personage.exchangeWeapon();
-            personage.displayFeatures();
-            System.out.println("Prêt à continuer?");
-        }
+    public ArrayList setPlateauDeJeu(){
+        plateauDeJeu= new ArrayList<Case>();
+        CaseVide emptyCase= new CaseVide();
+        plateauDeJeu.add(emptyCase);
+        System.out.println(plateauDeJeu);
+        return plateauDeJeu;
+
+    }
+
+    public void jouerUnTour(Personage personage){
+        //simplifiedPlateau();
+        //for(int i=1; i<=nbCasePlateau; i++) {
+            lancerDe();
+            positionJoueur += lancerDe();
+            Random randomGenerator = new Random();
+            int index = randomGenerator.nextInt(creationObjects().size());
+            Case caseGenerated = (Case) creationObjects().get(index);
+            System.out.println(caseGenerated.getClass().getSimpleName());
+
+            if (caseGenerated.getClass().getSimpleName().equals("Ennemi")){
+                personage.displayFeatures();
+                personage.faceEnnemy((Ennemi) creationObjects().get(1));
+                System.out.println(personage);
+                setPlateauDeJeu().add(caseGenerated);
+                System.out.println("Prêt à continuer?");
+            } else if (caseGenerated.getClass().getSimpleName().equals("Potion")) {
+                personage.displayFeatures();
+                personage.receivePotion((Potion) creationObjects().get(3));
+                System.out.println(personage);
+                setPlateauDeJeu().add(caseGenerated);
+                System.out.println("Prêt à continuer?");
+            } else if (caseGenerated.getClass().getSimpleName().equals("Arme")) {
+                personage.displayFeatures();
+                personage.exchangeWeapon((Arme) creationObjects().get(2));
+                System.out.println(personage);
+                setPlateauDeJeu().add(caseGenerated);
+                System.out.println("Prêt à continuer?");
+            }
+
+
 
 
     }
 
-    public void simplifiedPlateau(){
-        plateauDeJeu= new ArrayList<Case>();
+    public ArrayList creationObjects(){
+        ArrayList<Case> listOfObjects= new ArrayList<Case>();
         CaseVide emptyCase= new CaseVide();
-        plateauDeJeu.add(emptyCase);
-        Ennemi ennemy = new Ennemi(10,"Goliath","Etre de pacotille (ou pas...)");
-        plateauDeJeu.add(ennemy);
+        listOfObjects.add(emptyCase);
+        Ennemi ennemy = new Ennemi(103,"Goliath","Etre de pacotille (ou pas...)");
+        listOfObjects.add(ennemy);
         Arme weapon = new Arme("Arme","Lame du roi déchu",15);
-        plateauDeJeu.add(weapon);
+        listOfObjects.add(weapon);
         Potion potion= new Potion("Potion de régénération", 4, "Liquide étonnament raffraichissant surement créé par un vieil elfe");
-        plateauDeJeu.add(potion);
-        System.out.println(plateauDeJeu);
+        listOfObjects.add(potion);
+        //System.out.println(listOfObjects);
+        return listOfObjects;
     }
 }

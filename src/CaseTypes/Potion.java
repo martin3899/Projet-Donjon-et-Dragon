@@ -23,4 +23,9 @@ public class Potion implements Case{
     public void interact(Personage character) {
         System.out.println("Votre personnage reçoit une potion!");
     }
+
+    @Override
+    public String toString() {
+        return "Votre personnage reçoit une potion!";
+    }
 }

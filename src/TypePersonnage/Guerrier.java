@@ -8,7 +8,7 @@ public class Guerrier extends Personage {
     private Bouclier shield;
     private Arme weapon;
     public Guerrier(String name) {
-        super(name);
+        super(name,"guerrier");
     }
 
     public void displayFeatures() {

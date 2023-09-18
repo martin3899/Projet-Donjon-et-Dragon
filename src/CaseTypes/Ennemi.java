@@ -20,6 +20,11 @@ public class Ennemi implements Case{
 
     @Override
     public void interact(Personage character) {
-        System.out.println("Votre personnage fait face à un terrible monstre!!!");
+        //System.out.println("Votre personnage fait face à un terrible monstre!!!");
+    }
+
+    @Override
+    public String toString() {
+        return "Votre personnage fait face à un terrible monstre!!!";
     }
 }
