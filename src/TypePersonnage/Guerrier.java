@@ -12,7 +12,7 @@ public class Guerrier extends Personage {
     }
 
     public void displayFeatures() {
-        super.displayFeatures();
+        super.characterDefault();
     }
 
     @Override

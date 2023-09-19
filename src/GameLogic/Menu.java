@@ -1,4 +1,8 @@
+package GameLogic;
+
 import Exceptions.PersonnageHorsPlateauException;
+import GameLogic.Game;
+import Personnage.Personage;
 import TypePersonnage.Guerrier;
 import TypePersonnage.Magicien;
 
@@ -6,7 +10,9 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private String characterType;
+    private String characterTypes;
+
+    private Personage personage;
 
     public void launchGame() {  //Lancement du jeu
         System.out.println("Vous jouez à Donjons & Dragons");
@@ -24,16 +30,20 @@ public class Menu {
                 if (characterType.equals("guerrier")) {
                     String characterName = scanner("Entrer le nom");
                     createWarrior(characterName);
+                    personage= (Personage) createWarrior(characterName);
                     break;
                 } else if (characterType.equals("magicien")) {
                     String characterName = scanner("Entrer le nom");
                     createMage(characterName);
+                    personage= (Personage) createMage(characterName);
                     break;
                 } else {
                     System.out.println("Ca n'existe pas ducon!");
                     characterType = scanner("Entrer le type").toLowerCase();
                 }
             }
+            characterTypes=characterType;
+
 
 
             //System.out.println("Le personnage est de type " + characterType);
@@ -45,19 +55,20 @@ public class Menu {
             if (asksIfItsSuit.equals("non")) {
                 startGame();    // On recommence si c'est non
             } else {
-                gameplay();     // On joue si c'est oui
+                gameplay(personage);     // On joue si c'est oui
             }
 
         } else {
-            gameplay();
+            personage= (Personage) createWarrior("Yan");
+            gameplay(personage);
         }
     }
 
-    public void gameplay() { //Partie de jeu
+    public void gameplay(Personage personage) { //Partie de jeu
         System.out.println("Lancement de la partie");
         Game partie = new Game();
         try {
-            partie.game();
+            partie.game(personage);
         } catch (PersonnageHorsPlateauException e) {
             System.out.println(e.getMessage());
             System.out.println("Bravo, vous avez gagné!");
@@ -73,7 +84,7 @@ public class Menu {
 
         if (restartGame.equals("oui")) {
             startGame();      //Si oui on recommence
-            gameplay();
+            gameplay(personage);
         } else {
             System.out.println("Vous quittez le jeu!"); // Si non on quitte le jeu
         }
@@ -103,18 +114,20 @@ public class Menu {
         return answer;
     }
 
-    public void createWarrior(String name) {
+    public Object createWarrior(String name) {
         Guerrier warrior = new Guerrier(name);
         warrior.setTypeCharacter("guerrier");
-        warrior.displayFeatures();
+        warrior.characterDefault();
         System.out.println(warrior.toString());
+        return warrior;
     }
 
-    public void createMage(String name) {
+    public Object createMage(String name) {
         Magicien mage = new Magicien(name);
         mage.setTypeCharacter("magicien");
-        mage.displayFeatures();
+        mage.characterDefault();
         System.out.println(mage.toString());
+        return mage;
     }
 
 

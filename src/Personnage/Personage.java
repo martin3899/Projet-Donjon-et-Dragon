@@ -37,31 +37,58 @@ public abstract class Personage {
 
 
     //Afficher les caractéristiques du personnage
-    public void displayFeatures(){
+    public void characterDefault(){
         if (typeCharacter.equals("guerrier")){
-            int setHealthPoint=10;
-            int setOffensiveStrength=10;
-            healthPoint=setHealthPoint;
-            offensiveStrength=setOffensiveStrength;
-            Arme arme = new Arme("Arme","Excalibur",100); //Création de l'objet "arme"
-            Bouclier bouclier = new Bouclier("Bouclier","Impasse du soleil",100); //Création de l'objet "bouclier"
-            equipementOffensif=arme; //On associe l'arme au guerrier
-            equipementDefensif=bouclier; //On associe le bouclier au guerrier
+            healthPoint=10;
+            offensiveStrength=10;
+            displayWeapon("Arme","Excalibur",100);
+            displayShield("Bouclier","Impasse du soleil",100); //Création de l'objet "bouclier"
         } else {
-            int setHealthPoint=6;
-            int setOffensiveStrength=15;
-            healthPoint=setHealthPoint;
-            offensiveStrength=setOffensiveStrength;
-            Sort sort = new Sort("Spell","Calcination", 150);  //Création de l'objet "sort"
-            Philtre filtre = new Philtre("Philter","Régénération suprême",80);  //Création de l'objet "filtre"
-            equipementOffensif=sort;  //On associe le sort au magicien
-            equipementDefensif=filtre;  //On associe le filtre au magicien
+            healthPoint=6;
+            offensiveStrength=15;
+            displaySpell("Spell","Calcination", 150);  //Création de l'objet "sort"
+            displayPhilter("Philter","Régénération suprême",80);  //Création de l'objet "filtre"
        }
     }
 
-    public void receivePotion(Potion potion){
+    public void displayFeaturesUpdate(int increaseAtkWeapon){
+        if (typeCharacter.equals("guerrier")){
+            offensiveStrength=10;
+            displayWeapon("Arme","Lame du roi déchu",115+increaseAtkWeapon*5);
+            displayShield("Bouclier","Impasse du soleil",100); //Création de l'objet "bouclier"
+        } else {
+            offensiveStrength=15;
+            displaySpell("Spell","Calcination", 150);  //Création de l'objet "sort"
+            displayPhilter("Philter","Régénération suprême",80);  //Création de l'objet "filtre"
+        }
+    }
+
+    public void displayWeapon(String typeWeapon, String nameWeapon, int lvlAtk){
+        Arme arme = new Arme(typeWeapon,nameWeapon,lvlAtk);
+        equipementOffensif=arme;
+    }
+
+    public void displayShield(String protectionEquipement, String nameEquipement, int lvlDef){
+        Bouclier bouclier = new Bouclier(protectionEquipement,nameEquipement,lvlDef);
+        equipementDefensif=bouclier;
+    }
+
+    public void displaySpell(String typeWeapon, String nameSpell, int lvlAtk){
+        Sort spell = new Sort(typeWeapon,nameSpell,lvlAtk);
+        equipementOffensif=spell;
+    }
+
+    public void displayPhilter(String protectionEquipement, String nameEquipement, int lvlDef){
+        Philtre philter = new Philtre(protectionEquipement,nameEquipement,lvlDef);
+        equipementDefensif=philter;
+    }
+
+
+
+    public int receivePotion(Potion potion){
         int hp = potion.getHealthValue();
         healthPoint+=hp;
+        return healthPoint;
     }
 
     public void faceEnnemy(Ennemi ennemi){
@@ -70,9 +97,10 @@ public abstract class Personage {
     }
 
     public void exchangeWeapon(EquipementOffensif equipementOffensif){
-        equipementOffensif.getTypeWeapon();
-        equipementOffensif.getNameWeapon();
-        equipementOffensif.getLvlAtk();
+        displayWeapon(equipementOffensif.getTypeWeapon(), equipementOffensif.getNameWeapon(), equipementOffensif.getLvlAtk());
+    }
+    public String detailCharacterGame(){
+        return nameCharacter + " à maintenant " + healthPoint + " points de vie et une force d'attaque de " + offensiveStrength + " .Son équipement offensif est: " + equipementOffensif;
     }
 
     //Méthode permettant d'afficher les caractéristiques du personnage sous forme de chaine de caractère

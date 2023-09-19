@@ -51,7 +51,7 @@ public abstract class EquipementOffensif implements Case {
 
     //Méthode permettant d'afficher les caractéristiques de l'équipement offensif sous forme de chaine de caractère
     public String toString(){
-        return "Son équipement offensif: " + typeWeapon + " de nom " + nameWeapon + " et de niveau d'attaque " + lvlAtk + ".";
+        return "Une " + typeWeapon + " nommée " + nameWeapon + " et de niveau d'attaque " + lvlAtk + ".";
     }
 
 }
