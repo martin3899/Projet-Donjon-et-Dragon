@@ -1,8 +1,6 @@
-package EquipementOffensif;
+package Equipements.EquipementOffensif.TypeEquipementOffensif;
 
-import CaseTypes.Case;
-import Equipements.EquipementOffensif;
-import Personnage.Personage;
+import Equipements.EquipementOffensif.EquipementOffensif;
 
 public class Arme extends EquipementOffensif {
     public Arme(String weapon, String name, int atk) {

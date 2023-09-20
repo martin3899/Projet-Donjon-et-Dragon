@@ -1,4 +1,4 @@
-package Equipements;
+package Equipements.EquipementOffensif;
 
 import CaseTypes.Case;
 import Personnage.Personage;

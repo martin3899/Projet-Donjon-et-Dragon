@@ -1,7 +1,7 @@
 package TypePersonnage;
 
-import EquipementDefensif.Philtre;
-import EquipementOffensif.Sort;
+import Equipements.EquipementDefensif.TypeEquipementDefensif.Philtre;
+import Equipements.EquipementOffensif.TypeEquipementOffensif.Sort;
 import Personnage.Personage;
 
 public class Magicien extends Personage {
@@ -10,7 +10,7 @@ public class Magicien extends Personage {
     private Philtre philter;
 
     public Magicien(String name) {
-        super(name);
+        super(name,"magicien");
     }
 
     public void displayFeatures() {

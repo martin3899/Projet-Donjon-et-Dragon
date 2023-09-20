@@ -1,8 +1,9 @@
-package CaseTypes;
+package CaseTypes.EmptyCase;
 
+import CaseTypes.Case;
 import Personnage.Personage;
 
-public class CaseVide implements Case{
+public class CaseVide implements Case {
     public CaseVide() {
     }
 

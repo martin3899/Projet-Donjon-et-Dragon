@@ -1,9 +1,10 @@
-package CaseTypes;
+package CaseTypes.PotionCase;
 
+import CaseTypes.Case;
 import Personnage.Personage;
 
 
-public class Potion implements Case{
+public class Potion implements Case {
     private int healthValue;
     private String namePotion;
 

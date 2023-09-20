@@ -1,4 +1,4 @@
-package Equipements;
+package Equipements.EquipementDefensif;
 
 public abstract class EquipementDefensif {
 

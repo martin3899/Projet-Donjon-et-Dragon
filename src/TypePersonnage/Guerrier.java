@@ -1,6 +1,6 @@
 package TypePersonnage;
-import EquipementDefensif.Bouclier;
-import EquipementOffensif.Arme;
+import Equipements.EquipementDefensif.TypeEquipementDefensif.Bouclier;
+import Equipements.EquipementOffensif.TypeEquipementOffensif.Arme;
 import Personnage.Personage;
 
 public class Guerrier extends Personage {

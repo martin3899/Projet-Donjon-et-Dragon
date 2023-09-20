@@ -1,6 +1,6 @@
-package EquipementOffensif;
+package Equipements.EquipementOffensif.TypeEquipementOffensif;
 
-import Equipements.EquipementOffensif;
+import Equipements.EquipementOffensif.EquipementOffensif;
 
 public class Sort extends EquipementOffensif {
     public Sort(String weapon, String name, int atk) {
