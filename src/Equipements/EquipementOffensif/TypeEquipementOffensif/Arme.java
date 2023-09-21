@@ -8,6 +8,7 @@ public class Arme extends EquipementOffensif {
     }
 
 
+
     @Override
     public String toString() {
         return super.toString();

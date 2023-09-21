@@ -38,13 +38,13 @@ public abstract class Personage {
     //Afficher les caractéristiques du personnage
     public void characterDefault(){
         if (typeCharacter.equals("guerrier")){
-            healthPoint=10;
-            offensiveStrength=10;
+            healthPoint=100;
+            offensiveStrength=100;
             displayWeapon("Arme","Excalibur",100);
             displayShield("Bouclier","Impasse du soleil",100); //Création de l'objet "bouclier"
         } else {
-            healthPoint=6;
-            offensiveStrength=15;
+            healthPoint=60;
+            offensiveStrength=150;
             displaySpell("Spell","Calcination", 150);  //Création de l'objet "sort"
             displayPhilter("Philter","Régénération suprême",100);  //Création de l'objet "filtre"
        }
@@ -53,11 +53,11 @@ public abstract class Personage {
     public void displayFeaturesUpdate(){
         if (typeCharacter.equals("guerrier")){
             offensiveStrength=10;
-            displayWeapon("Arme","Lame du roi déchu",115);
+            displayWeapon(equipementOffensif.getTypeWeapon(),equipementOffensif.getNameWeapon(),equipementOffensif.getLvlAtk());
             displayShield("Bouclier","Impasse du soleil",100); //Création de l'objet "bouclier"
         } else {
             offensiveStrength=15;
-            displaySpell("Spell","Brûlure profonde", 165);  //Création de l'objet "sort"
+            displaySpell(equipementOffensif.getTypeWeapon(),equipementOffensif.getNameWeapon(), equipementOffensif.getLvlAtk());  //Création de l'objet "sort"
             displayPhilter("Philter","Régénération suprême",100);  //Création de l'objet "filtre"
         }
     }
@@ -96,12 +96,10 @@ public abstract class Personage {
         healthPoint-=(atkDmg-equipementDefensif.getLvlDef());
     }
 
-    public void exchangeWeapon(EquipementOffensif equipementOffensif){
+    public void exchangeEquipementOffensif(EquipementOffensif equipementOffensif){
         displayWeapon(equipementOffensif.getTypeWeapon(), equipementOffensif.getNameWeapon(), equipementOffensif.getLvlAtk());
     }
-    public void exchangeSpell(EquipementOffensif equipementOffensif){
-        displaySpell(equipementOffensif.getTypeWeapon(), equipementOffensif.getNameWeapon(), equipementOffensif.getLvlAtk());
-    }
+
 
     public String detailCharacterGame(){
         return nameCharacter + " à maintenant " + healthPoint + " points de vie et une force d'attaque de " + offensiveStrength + " .Son équipement offensif est: " + equipementOffensif;

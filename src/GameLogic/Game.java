@@ -8,8 +8,8 @@ import Equipements.EquipementOffensif.TypeEquipementOffensif.Arme;
 import Equipements.EquipementOffensif.TypeEquipementOffensif.Sort;
 import Exceptions.PersonnageHorsPlateauException;
 import Personnage.Personage;
-import TypePersonnage.Guerrier;
-import TypePersonnage.Magicien;
+import TypePersonnage.AbstractFactory;
+import TypePersonnage.Factory;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,14 +24,14 @@ public class Game {
 
     }
 
-    public void game(Personage personage) throws PersonnageHorsPlateauException{
+    public void game(String characterType, Personage personage) throws PersonnageHorsPlateauException{
         int tourNumero=1;
         //personage.characterDefault();
         setPlateauDeJeu();
         int positionJoueur = 1;
         while (positionJoueur < 64) {
             System.out.println("Tour numéro " + tourNumero);
-            positionJoueur+=jouerUnTour(personage);
+            positionJoueur+=jouerUnTour(characterType,personage);
             System.out.println("Le personnage est sur la case " + positionJoueur);
             Menu menu= new Menu();
             String continuer = menu.scannerBoolean("Voulez-vous continuer?");
@@ -57,63 +57,46 @@ public class Game {
         return plateauDeJeu;
     }
 
-    public int jouerUnTour(Personage personage){
+    public int jouerUnTour(String characterType,Personage personnage){
         int diceRoll = lancerDe();
         System.out.println("La valeur du dé est " + diceRoll);
         Random randomGenerator = new Random();
-        int index = randomGenerator.nextInt(creationObjects(personage).size());
-        Case caseGenerated = (Case) creationObjects(personage).get(index);
+        int index = randomGenerator.nextInt(creationObjects(characterType).size());
+        Case caseGenerated = (Case) creationObjects(characterType).get(index);
         System.out.println("Vous atterissez sur une case " + caseGenerated.getClass().getSimpleName());
         if (caseGenerated.getClass().getSimpleName().equals("Ennemi")){
-            generateSpecificCase(caseGenerated,personage);
             plateauDeJeu.add(caseGenerated.getClass().getSimpleName());
         } else if (caseGenerated.getClass().getSimpleName().equals("Potion")) {
-            generateSpecificCase(caseGenerated,personage);
             plateauDeJeu.add(caseGenerated.getClass().getSimpleName());
-        } else if (caseGenerated.getClass().getSimpleName().equals("Arme")) {
-            generateSpecificCase(caseGenerated,personage);
-            plateauDeJeu.add(caseGenerated.getClass().getSimpleName());
-        } else if (caseGenerated.getClass().getSimpleName().equals("Sort")) {
-            generateSpecificCase(caseGenerated,personage);
+        } else if (caseGenerated.getClass().getSimpleName().equals("EquipementOffensif")) {
             plateauDeJeu.add(caseGenerated.getClass().getSimpleName());
         }
+        generateSpecificCase(caseGenerated,characterType,personnage);
         return diceRoll;
     }
 
-    public void generateSpecificCase(Case caseGenerated,Personage personage){
+    public void generateSpecificCase(Case caseGenerated, String characterType, Personage personage){
         personage.displayFeaturesUpdate();
         if (caseGenerated.getClass().getSimpleName().equals("Ennemi")) {
-            personage.faceEnnemy((Ennemi) creationObjects(personage).get(1));
+            personage.faceEnnemy((Ennemi) creationObjects(characterType).get(1));
             System.out.println("L'ennemi vous inflige 3 points de dégats.");
         } else if (caseGenerated.getClass().getSimpleName().equals("Potion")) {
-            personage.receivePotion((Potion) creationObjects(personage).get(3));
+            personage.receivePotion((Potion) creationObjects(characterType).get(3));
             System.out.println("La potion vous régénère de 4 points de vie.");
-        } else if (caseGenerated.getClass().getSimpleName().equals("Arme")) {
-            personage.exchangeWeapon((Arme) creationObjects(personage).get(2));
+        } else if (caseGenerated.getClass().getSimpleName().equals("EquipementOffensif")) {
+            personage.exchangeEquipementOffensif((EquipementOffensif) creationObjects(characterType).get(2));
             System.out.println("Votre arme s'améliore.");
-        } else if (caseGenerated.getClass().getSimpleName().equals("Sort")) {
-            personage.exchangeSpell((Sort) creationObjects(personage).get(2));
-            System.out.println("Votre équipement s'améliore.");
         }
         System.out.println(personage.detailCharacterGame());
     }
 
-    public ArrayList creationObjects(Personage personnage){
+    public ArrayList creationObjects(String type){
+        Factory factory = AbstractFactory.createFactory(type);
         ArrayList<Case> listOfObjects= new ArrayList<Case>();
-        CaseVide emptyCase= new CaseVide();
-        listOfObjects.add(emptyCase);
-        Ennemi ennemy = new Ennemi(103,"Goliath","Etre de pacotille (ou pas...)");
-        listOfObjects.add(ennemy);
-        if (personnage instanceof Guerrier) {
-            Arme weapon = new Arme("Arme", "Lame du roi déchu", 115);
-            listOfObjects.add(weapon);
-        }
-        else {
-            Sort spell = new Sort("Sort","Brûlure profonde",165);
-            listOfObjects.add(spell);
-        }
-        Potion potion= new Potion("Potion de régénération", 4, "Liquide étonnament raffraichissant surement créé par un vieil elfe");
-        listOfObjects.add(potion);
+        listOfObjects.add(factory.createCaseVide());
+        listOfObjects.add(factory.createEnnemi());
+        listOfObjects.add(factory.createEquipementOffensiff());
+        listOfObjects.add(factory.createPotion());
         return listOfObjects;
     }
 }

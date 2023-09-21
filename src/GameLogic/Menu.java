@@ -31,23 +31,24 @@ public class Menu {
                     String characterName = scanner("Entrer le nom");
                     createWarrior(characterName);
                     personage= (Personage) createWarrior(characterName);
+                    characterTypes=characterType;
                     break;
                 } else if (characterType.equals("magicien")) {
                     String characterName = scanner("Entrer le nom");
                     createMage(characterName);
                     personage= (Personage) createMage(characterName);
+                    characterTypes=characterType;
                     break;
                 } else {
                     System.out.println("Ca n'existe pas ducon!");
                     characterType = scanner("Entrer le type").toLowerCase();
                 }
             }
-            characterTypes=characterType;
 
 
 
-            //System.out.println("Le personnage est de type " + characterType);
-            //System.out.println("Le personnage s'appelle " + characterName);
+
+
 
 
             String asksIfItsSuit = scannerBoolean("Ce personnage vous convient?").toLowerCase();
@@ -55,20 +56,20 @@ public class Menu {
             if (asksIfItsSuit.equals("non")) {
                 startGame();    // On recommence si c'est non
             } else {
-                gameplay(personage);     // On joue si c'est oui
+                gameplay(characterTypes);     // On joue si c'est oui
             }
 
         } else {
-            personage= (Personage) createWarrior("Yan");
-            gameplay(personage);
+            characterTypes="guerrier";
+            gameplay(characterTypes);
         }
     }
 
-    public void gameplay(Personage personage) { //Partie de jeu
+    public void gameplay(String characterTypes) { //Partie de jeu
         System.out.println("Lancement de la partie");
         Game partie = new Game();
         try {
-            partie.game(personage);
+            partie.game(characterTypes, personage);
         } catch (PersonnageHorsPlateauException e) {
             System.out.println(e.getMessage());
             System.out.println("Bravo, vous avez gagné!");
@@ -84,7 +85,7 @@ public class Menu {
 
         if (restartGame.equals("oui")) {
             startGame();      //Si oui on recommence
-            gameplay(personage);
+            gameplay(characterTypes);
         } else {
             System.out.println("Vous quittez le jeu!"); // Si non on quitte le jeu
         }
