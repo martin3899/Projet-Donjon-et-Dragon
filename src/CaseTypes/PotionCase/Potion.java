@@ -20,6 +20,10 @@ public class Potion implements Case {
         return healthValue;
     }
 
+    public String getNamePotion() {
+        return namePotion;
+    }
+
     @Override
     public void interact(Personage character) {
         System.out.println("Votre personnage reçoit une potion!");

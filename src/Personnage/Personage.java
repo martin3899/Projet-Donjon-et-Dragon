@@ -1,5 +1,6 @@
 package Personnage;
 
+import Equipements.EquipementDefensif.EquipementDefensif;
 import Equipements.EquipementDefensif.TypeEquipementDefensif.Bouclier;
 import Equipements.EquipementDefensif.TypeEquipementDefensif.Philtre;
 import Equipements.EquipementOffensif.EquipementOffensif;
@@ -34,6 +35,33 @@ public abstract class Personage {
         this.typeCharacter = typeCharacter;
     }
 
+    public void setHealthPoint(int healthPoint) {
+        this.healthPoint = healthPoint;
+    }
+
+    public String getTypeCharacter() {
+        return typeCharacter;
+    }
+
+    public int getHealthPoint() {
+        return healthPoint;
+    }
+
+    public int getOffensiveStrength() {
+        return offensiveStrength;
+    }
+
+    public String getNameCharacter() {
+        return nameCharacter;
+    }
+
+    public EquipementOffensif getEquipementOffensif() {
+        return equipementOffensif;
+    }
+
+    public EquipementDefensif getEquipementDefensif() {
+        return equipementDefensif;
+    }
 
     //Afficher les caractéristiques du personnage
     public void characterDefault(){
@@ -45,18 +73,18 @@ public abstract class Personage {
         } else {
             healthPoint=60;
             offensiveStrength=150;
-            displaySpell("Spell","Calcination", 150);  //Création de l'objet "sort"
+            displaySpell("Spell","Calcination", 100);  //Création de l'objet "sort"
             displayPhilter("Philter","Régénération suprême",100);  //Création de l'objet "filtre"
        }
     }
 
     public void displayFeaturesUpdate(){
         if (typeCharacter.equals("guerrier")){
-            offensiveStrength=10;
+            offensiveStrength=100;
             displayWeapon(equipementOffensif.getTypeWeapon(),equipementOffensif.getNameWeapon(),equipementOffensif.getLvlAtk());
             displayShield("Bouclier","Impasse du soleil",100); //Création de l'objet "bouclier"
         } else {
-            offensiveStrength=15;
+            offensiveStrength=150;
             displaySpell(equipementOffensif.getTypeWeapon(),equipementOffensif.getNameWeapon(), equipementOffensif.getLvlAtk());  //Création de l'objet "sort"
             displayPhilter("Philter","Régénération suprême",100);  //Création de l'objet "filtre"
         }
@@ -87,17 +115,21 @@ public abstract class Personage {
     public int receivePotion(Potion potion){
         int hp = potion.getHealthValue();
         healthPoint+=hp;
+        System.out.println("La " + potion.getNamePotion().toLowerCase() + " vous régénère de " + potion.getHealthValue() + " points de vie.");
         return healthPoint;
     }
 
 
     public void faceEnnemy(Ennemi ennemi){
         int atkDmg = ennemi.getAtkDamage();
-        healthPoint-=(atkDmg-equipementDefensif.getLvlDef());
+        int dmg = atkDmg-equipementDefensif.getLvlDef();
+        healthPoint-=dmg;
+        System.out.println(ennemi.getNameEnnemy() + " vous inflige " + dmg + " points de dégât.");
     }
 
     public void exchangeEquipementOffensif(EquipementOffensif equipementOffensif){
         displayWeapon(equipementOffensif.getTypeWeapon(), equipementOffensif.getNameWeapon(), equipementOffensif.getLvlAtk());
+        System.out.println("Vous débloquez " + equipementOffensif.getNameWeapon() + ". Votre équipement s'améliore.");
     }
 
 

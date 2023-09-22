@@ -29,13 +29,11 @@ public class Menu {
             while (characterType != "guerrier" || characterType != "magicien") {
                 if (characterType.equals("guerrier")) {
                     String characterName = scanner("Entrer le nom");
-                    createWarrior(characterName);
                     personage= (Personage) createWarrior(characterName);
                     characterTypes=characterType;
                     break;
                 } else if (characterType.equals("magicien")) {
                     String characterName = scanner("Entrer le nom");
-                    createMage(characterName);
                     personage= (Personage) createMage(characterName);
                     characterTypes=characterType;
                     break;
@@ -45,17 +43,12 @@ public class Menu {
                 }
             }
 
-
-
-
-
-
-
             String asksIfItsSuit = scannerBoolean("Ce personnage vous convient?").toLowerCase();
 
             if (asksIfItsSuit.equals("non")) {
                 startGame();    // On recommence si c'est non
             } else {
+
                 gameplay(characterTypes);     // On joue si c'est oui
             }
 

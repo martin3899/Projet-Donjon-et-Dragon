@@ -20,19 +20,31 @@ public class Game {
 
     private int positionJoueur;
 
+
     public Game (){
 
+    }
+
+    public int getPositionJoueur() {
+        return positionJoueur;
+    }
+
+    public void setPositionJoueur(int positionJoueur) {
+        this.positionJoueur = positionJoueur;
     }
 
     public void game(String characterType, Personage personage) throws PersonnageHorsPlateauException{
         int tourNumero=1;
         //personage.characterDefault();
         setPlateauDeJeu();
-        int positionJoueur = 1;
+        positionJoueur = 1;
         while (positionJoueur < 64) {
             System.out.println("Tour numéro " + tourNumero);
-            positionJoueur+=jouerUnTour(characterType,personage);
+            int diceRoll = lancerDe();
+            System.out.println("La valeur du dé est " + diceRoll);
+            positionJoueur+=diceRoll;
             System.out.println("Le personnage est sur la case " + positionJoueur);
+            jouerUnTour(characterType,personage);
             Menu menu= new Menu();
             String continuer = menu.scannerBoolean("Voulez-vous continuer?");
             if (continuer.equals("non")){
@@ -57,9 +69,7 @@ public class Game {
         return plateauDeJeu;
     }
 
-    public int jouerUnTour(String characterType,Personage personnage){
-        int diceRoll = lancerDe();
-        System.out.println("La valeur du dé est " + diceRoll);
+    public void jouerUnTour(String characterType,Personage personnage){
         Random randomGenerator = new Random();
         int index = randomGenerator.nextInt(creationObjects(characterType).size());
         Case caseGenerated = (Case) creationObjects(characterType).get(index);
@@ -72,20 +82,18 @@ public class Game {
             plateauDeJeu.add(caseGenerated.getClass().getSimpleName());
         }
         generateSpecificCase(caseGenerated,characterType,personnage);
-        return diceRoll;
     }
 
     public void generateSpecificCase(Case caseGenerated, String characterType, Personage personage){
         personage.displayFeaturesUpdate();
-        if (caseGenerated.getClass().getSimpleName().equals("Ennemi")) {
-            personage.faceEnnemy((Ennemi) creationObjects(characterType).get(1));
-            System.out.println("L'ennemi vous inflige 3 points de dégats.");
-        } else if (caseGenerated.getClass().getSimpleName().equals("Potion")) {
+        if (caseGenerated.getClass().getSimpleName().equals("EnnemiWarrior") || caseGenerated.getClass().getSimpleName().equals("EnnemiMagician")) {
+//            personage.faceEnnemy((Ennemi) creationObjects(characterType).get(1));
+            Fights fight = new Fights(this);
+            fight.fightEnnemi((Ennemi) creationObjects(characterType).get(1),personage);
+        } else if (caseGenerated.getClass().getSimpleName().equals("SmallPotion") || caseGenerated.getClass().getSimpleName().equals("BigPotion")) {
             personage.receivePotion((Potion) creationObjects(characterType).get(3));
-            System.out.println("La potion vous régénère de 4 points de vie.");
-        } else if (caseGenerated.getClass().getSimpleName().equals("EquipementOffensif")) {
+        } else if (caseGenerated.getClass().getSimpleName().equals("ArmeWarrior") || caseGenerated.getClass().getSimpleName().equals("SortMagician")) {
             personage.exchangeEquipementOffensif((EquipementOffensif) creationObjects(characterType).get(2));
-            System.out.println("Votre arme s'améliore.");
         }
         System.out.println(personage.detailCharacterGame());
     }
