@@ -6,8 +6,6 @@ import Equipements.EquipementOffensif.EquipementOffensif;
 import Personnage.Personage;
 
 public class Fights {
-    private int healthPointPerso;
-    private int healthPointEnnemi;
     private Game game;
 
     public Fights(Game game) {

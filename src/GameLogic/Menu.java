@@ -8,16 +8,27 @@ import TypePersonnage.Magicien;
 
 import java.util.Scanner;
 
+/**
+ * Cette classe est pour générer le menu
+ * @author martin.vasseur
+ */
+
 public class Menu {
 
     private String characterTypes;
 
     private Personage personage;
 
+    /**
+     * Cette méthode permet de lancer le jeu
+     */
     public void launchGame() {  //Lancement du jeu
         System.out.println("Vous jouez à Donjons & Dragons");
     }
 
+    /**
+     * Cette méthode permet de lancer la partie en pouvant modifier ou non le personnage
+     */
     public void startGame() {  //Début du jeu
 
         String askModificationCharacter = scannerBoolean("Voulez-vous modifier le personnage?").toLowerCase();
@@ -54,9 +65,15 @@ public class Menu {
 
         } else {
             characterTypes="guerrier";
+            personage= (Personage) createWarrior("Yan");
             gameplay(characterTypes);
         }
     }
+
+    /**
+     * Cette méthode permet de jouer au jeu
+     * @param characterTypes Le type de personnage avec lequel on joue
+     */
 
     public void gameplay(String characterTypes) { //Partie de jeu
         System.out.println("Lancement de la partie");
@@ -71,6 +88,10 @@ public class Menu {
 
     }
 
+    /**
+     * Cette méthode permet de quitter le jeu ou non à la fin de la partie
+     */
+
     public void endGame() {  //Fin de jeu
 
         System.out.println("Fin de la partie");
@@ -84,6 +105,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Cette méthode permet de générer un scanner à partir d'une question ouverte
+     * @param question Rentrer la question
+     * @return La réponse à la question
+     */
     public String scanner(String question) {
         Scanner scn = new Scanner(System.in);
         String answer;
@@ -91,6 +117,13 @@ public class Menu {
         answer = scn.nextLine();
         return answer;
     }
+
+    /**
+     * Cette méthode permet de générer un scanner à partir d'une question fermée
+     * @param question Rentrer la question
+     * @return La réponse qui est oui ou non
+     */
+
     public String scannerBoolean(String question) {
         Scanner scn = new Scanner(System.in);
         String answer;
@@ -108,6 +141,12 @@ public class Menu {
         return answer;
     }
 
+
+    /**
+     * Cette méthode permet de générer un guerrier
+     * @param name Le nom du guerrier
+     * @return Le guerrier créé
+     */
     public Object createWarrior(String name) {
         Guerrier warrior = new Guerrier(name);
         warrior.setTypeCharacter("guerrier");
@@ -115,6 +154,12 @@ public class Menu {
         System.out.println(warrior.toString());
         return warrior;
     }
+
+    /**
+     * Cette méthode permet de générer un mage
+     * @param name Le nom du mage
+     * @return Le mage créé
+     */
 
     public Object createMage(String name) {
         Magicien mage = new Magicien(name);

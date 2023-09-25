@@ -27,6 +27,8 @@ public class Potion implements Case {
     @Override
     public void interact(Personage character) {
         System.out.println("Votre personnage reçoit une potion!");
+//        character.setHealthPoint(character.getHealthPoint()+this.getHealthValue());
+        //name character.receivePotion(this);
     }
 
     @Override

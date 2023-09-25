@@ -8,6 +8,11 @@ import Equipements.EquipementOffensif.TypeEquipementOffensif.Arme;
 import Equipements.EquipementOffensif.TypeEquipementOffensif.Sort;
 import CaseTypes.PotionCase.Potion;
 import CaseTypes.EnnemiCase.Ennemi;
+
+/**
+ * Cette classe est pour définir un personnage
+ * @author martin.vasseur
+ */
 public abstract class Personage {
     //Mise en place des attributs
     protected String nameCharacter;
@@ -63,6 +68,9 @@ public abstract class Personage {
         return equipementDefensif;
     }
 
+    /**
+     * Cette méthode est pour définir les statistique de combat du personnage en début de partie
+     */
     //Afficher les caractéristiques du personnage
     public void characterDefault(){
         if (typeCharacter.equals("guerrier")){
@@ -78,6 +86,9 @@ public abstract class Personage {
        }
     }
 
+    /**
+     * Cette méthode est pour définir les nouvelles statistiques de combat du personnage après avoir interragis avec un case.
+     */
     public void displayFeaturesUpdate(){
         if (typeCharacter.equals("guerrier")){
             offensiveStrength=100;
@@ -111,6 +122,11 @@ public abstract class Personage {
     }
 
 
+    /**
+     * Cette méthode est pour redéfinir les points de vie du personnage après avoir interragis avec une potion
+     * @param potion Le type de potion avec lequel le personnage interragis
+     * @return Les nouveaux points de vie du personnage
+     */
 
     public int receivePotion(Potion potion){
         int hp = potion.getHealthValue();
@@ -119,13 +135,6 @@ public abstract class Personage {
         return healthPoint;
     }
 
-
-    public void faceEnnemy(Ennemi ennemi){
-        int atkDmg = ennemi.getAtkDamage();
-        int dmg = atkDmg-equipementDefensif.getLvlDef();
-        healthPoint-=dmg;
-        System.out.println(ennemi.getNameEnnemy() + " vous inflige " + dmg + " points de dégât.");
-    }
 
     public void exchangeEquipementOffensif(EquipementOffensif equipementOffensif){
         displayWeapon(equipementOffensif.getTypeWeapon(), equipementOffensif.getNameWeapon(), equipementOffensif.getLvlAtk());

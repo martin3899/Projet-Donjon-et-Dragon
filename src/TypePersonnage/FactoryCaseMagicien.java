@@ -5,7 +5,9 @@ import CaseTypes.EmptyCase.CaseVide;
 import CaseTypes.EnnemiCase.Ennemi;
 import CaseTypes.EnnemiCase.TypeEnnemi.EnnemiMagicianFactory;
 import CaseTypes.EnnemiCase.TypeEnnemi.EnnemiWarriorFactory;
+import CaseTypes.EnnemiCase.TypeEnnemi.SeigneurFactory;
 import CaseTypes.PotionCase.Potion;
+import CaseTypes.PotionCase.PotionType.BigPotionFactory;
 import CaseTypes.PotionCase.PotionType.SmallPotionFactory;
 import Equipements.EquipementOffensif.EquipementOffensif;
 import Equipements.EquipementOffensif.TypeEquipementOffensif.Arme;
@@ -30,17 +32,29 @@ public class FactoryCaseMagicien implements Factory{
     }
 
     @Override
-    public Ennemi createEnnemi() {
-        EnnemiMagicianFactory ennemiFactory = new EnnemiMagicianFactory();
-        Ennemi ennemi = ennemiFactory.randomEnnemiMagician();
-        return ennemi;
+    public Ennemi createEnnemi(int position) {
+        if (position<45) {
+            EnnemiMagicianFactory ennemiFactory = new EnnemiMagicianFactory();
+            Ennemi ennemi = ennemiFactory.randomEnnemiMagician();
+            return ennemi;
+        } else {
+            SeigneurFactory seigneurFactory = new SeigneurFactory();
+            Ennemi ennemi =seigneurFactory.randomEnnemiSeigneur();
+            return ennemi;
+        }
     }
 
     @Override
-    public Potion createPotion() {
-        SmallPotionFactory smallPotionFactory = new SmallPotionFactory();
-        Potion potion = smallPotionFactory.randomSmallPotion();
-        return potion;
+    public Potion createPotion(int position) {
+        if (position<45) {
+            SmallPotionFactory smallPotionFactory = new SmallPotionFactory();
+            Potion potion = smallPotionFactory.randomSmallPotion();
+            return potion;
+        } else {
+            BigPotionFactory smallPotionFactory = new BigPotionFactory();
+            Potion potion = smallPotionFactory.randomBigPotion();
+            return potion;
+        }
     }
 
     @Override

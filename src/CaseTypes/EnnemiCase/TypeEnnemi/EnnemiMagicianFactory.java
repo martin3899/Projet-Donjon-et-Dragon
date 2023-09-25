@@ -1,10 +1,11 @@
 package CaseTypes.EnnemiCase.TypeEnnemi;
 
+import CaseTypes.Case;
 import CaseTypes.EnnemiCase.Ennemi;
 
 import java.util.Random;
 
-public class EnnemiMagicianFactory {
+public class EnnemiMagicianFactory{
     public Ennemi randomEnnemiMagician(){
         Random randomGenerator = new Random();
         int r = randomGenerator.nextInt(5);
@@ -18,4 +19,6 @@ public class EnnemiMagicianFactory {
         };
         return ennemi;
     }
+
+
 }

@@ -14,11 +14,17 @@ import TypePersonnage.Factory;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Cette classe permet de générer la partie de jeu
+ * @author martin.vasseur
+ */
+
 public class Game {
 
     private ArrayList plateauDeJeu;
 
     private int positionJoueur;
+
 
 
     public Game (){
@@ -33,12 +39,18 @@ public class Game {
         this.positionJoueur = positionJoueur;
     }
 
+    /**
+     * Cette méthode permet de générer la partie tour par tour
+     * @param characterType type du personnage
+     * @param personage le personage choisi
+     * @throws PersonnageHorsPlateauException Lorsque le joueur sort du plateau
+     */
     public void game(String characterType, Personage personage) throws PersonnageHorsPlateauException{
         int tourNumero=1;
         //personage.characterDefault();
         setPlateauDeJeu();
         positionJoueur = 1;
-        while (positionJoueur < 64) {
+        while (positionJoueur < 64 && personage.getHealthPoint()>0) {
             System.out.println("Tour numéro " + tourNumero);
             int diceRoll = lancerDe();
             System.out.println("La valeur du dé est " + diceRoll);
@@ -52,15 +64,24 @@ public class Game {
                 break;
             }
             if (positionJoueur > 64) {
-                throw new PersonnageHorsPlateauException(lancerDe());
+                throw new PersonnageHorsPlateauException(diceRoll);
             }
             tourNumero++;
         }
     }
 
+    /**
+     * Cette méthode permet de lancer les dés en générant un nombre aléatoire entre 0 et 6
+     * @return La valeur du dé
+     */
     public int lancerDe(){
         return (int) (Math.random() * 6) + 1;
     }
+
+    /**
+     * Génère le plateau de jeu en début de partie
+     * @return Le plateau de jeu généré
+     */
 
     public ArrayList setPlateauDeJeu(){
         plateauDeJeu= new ArrayList<Case>();
@@ -69,6 +90,11 @@ public class Game {
         return plateauDeJeu;
     }
 
+    /**
+     * Cette méthode montre le déroulement d'un tour
+     * @param characterType Le type du personnage
+     * @param personnage Le personnage choisi
+     */
     public void jouerUnTour(String characterType,Personage personnage){
         Random randomGenerator = new Random();
         int index = randomGenerator.nextInt(creationObjects(characterType).size());
@@ -84,6 +110,13 @@ public class Game {
         generateSpecificCase(caseGenerated,characterType,personnage);
     }
 
+    /**
+     * Cette méthode permet de générer une case et de faire l'interaction entre celle-ci et le personnage
+     * @param caseGenerated type de case générée
+     * @param characterType type du personnage
+     * @param personage personnage joué
+     */
+
     public void generateSpecificCase(Case caseGenerated, String characterType, Personage personage){
         personage.displayFeaturesUpdate();
         if (caseGenerated.getClass().getSimpleName().equals("EnnemiWarrior") || caseGenerated.getClass().getSimpleName().equals("EnnemiMagician")) {
@@ -98,13 +131,19 @@ public class Game {
         System.out.println(personage.detailCharacterGame());
     }
 
+    /**
+     * Génère aléatoirement des objets venant des usines à objets
+     * @param type type du personnage
+     * @return l'usine d'objet pour le type de personnage choisi
+     */
+
     public ArrayList creationObjects(String type){
         Factory factory = AbstractFactory.createFactory(type);
         ArrayList<Case> listOfObjects= new ArrayList<Case>();
         listOfObjects.add(factory.createCaseVide());
-        listOfObjects.add(factory.createEnnemi());
+        listOfObjects.add(factory.createEnnemi(positionJoueur));
         listOfObjects.add(factory.createEquipementOffensiff());
-        listOfObjects.add(factory.createPotion());
+        listOfObjects.add(factory.createPotion(positionJoueur));
         return listOfObjects;
     }
 }

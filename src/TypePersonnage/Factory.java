@@ -10,9 +10,9 @@ public interface Factory {
     Personage createPersonnage(String name);
     EquipementOffensif createEquipementOffensiff();
 
-    Ennemi createEnnemi();
+    Ennemi createEnnemi(int position);
 
-    Potion createPotion();
+    Potion createPotion(int position);
 
     CaseVide createCaseVide();
 }

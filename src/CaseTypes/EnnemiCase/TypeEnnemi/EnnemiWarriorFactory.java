@@ -6,7 +6,7 @@ import Personnage.Personage;
 
 import java.util.Random;
 
-public class EnnemiWarriorFactory implements Case {
+public class EnnemiWarriorFactory {
     public static Ennemi randomEnnemiWarrior(){
         Random randomGenerator = new Random();
         int r = randomGenerator.nextInt(5);
@@ -21,8 +21,5 @@ public class EnnemiWarriorFactory implements Case {
         return ennemi;
     }
 
-    @Override
-    public void interact(Personage character) {
 
-    }
 }
